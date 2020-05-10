@@ -8,7 +8,7 @@ public enum BotState {
     Start {
         @Override
         public void enter(BotContext context) {
-            sendMessage(context, "Hello");
+            sendMessage(context, "Hello from Nick bot !");
         }
 
         @Override
@@ -19,12 +19,52 @@ public enum BotState {
     EnterPhone {
         @Override
         public void enter(BotContext context) {
-            sendMessage(context,"Enter phone !!!");
+            sendMessage(context,"Enter your phone !!!");
+        }
+
+        public void handleInput(BotContext context) {
+            context.getUser().setPhone(context.getInput());
         }
 
         @Override
         public BotState nextState() {
-            return EnterPhone;
+            return EnterEmail;
+        }
+    },
+    EnterEmail{
+        BotState next;
+
+        @Override
+        public void enter(BotContext context) {
+            sendMessage(context,"Enter your email !!!");
+        }
+
+        public void handleInput(BotContext context) {
+            String email = context.getInput();
+
+            if (Utils.isValidEmailAdDress(email)) {
+                context.getUser().setEmail(email);
+                next = Approved;
+            } else {
+                sendMessage(context, "Wrong e-mail address!");
+                next = EnterEmail;
+            }
+        }
+
+        @Override
+        public BotState nextState() {
+            return next;
+        }
+    },
+    Approved(false) {
+        @Override
+        public void enter(BotContext context) {
+            sendMessage(context, "Thank you for registration");
+        }
+
+        @Override
+        public BotState nextState() {
+            return Start;
         }
     };
 

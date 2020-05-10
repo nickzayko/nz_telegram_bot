@@ -48,6 +48,8 @@ public class ChatBot extends TelegramLongPollingBot {
 
         User user = userService.findByChatId(chatId);
 
+
+
         if (checkIfAdminCommand(user, text)) {
             return;
         }

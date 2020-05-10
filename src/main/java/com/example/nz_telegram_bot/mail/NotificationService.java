@@ -3,6 +3,7 @@ package com.example.nz_telegram_bot.mail;
 import com.example.nz_telegram_bot.entity.User;
 import com.example.nz_telegram_bot.service.UserService;
 
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.SimpleMailMessage;
